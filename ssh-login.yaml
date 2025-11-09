@@ -1,0 +1,8 @@
+---
+- name: Give me an interactive shell
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Open SSH session
+      command: /bin/bash
+      become: yes
