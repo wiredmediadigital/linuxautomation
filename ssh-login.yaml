@@ -1,8 +1,15 @@
 ---
-- name: Give me an interactive shell
+- name: Add local SSH public key to ansible user
   hosts: all
-  gather_facts: no
+  become: yes
   tasks:
-    - name: Open SSH session
-      command: /bin/bash
-      become: yes
+    - name: Ensure ansible user exists
+      user:
+        name: ansible
+        state: present
+        shell: /bin/bash
+
+    - name: Add authorized key for ansible user
+      authorized_key:
+        user: ansible
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDpXhKZOCdKPX0khYDpplcKxI2mdZOrAopoXVhURZFWemaMGH1D3xGdaoYvDjzry+EBwniip95NDCDNcLurTByDTsw6mYuMzHhC6P88v1m5M1fiAGmiCSqia1HdlRwyUYAW0sNYt1up43azB3en1c1yaM+dqkzaCClOMP43bzTIwYV1wmotEP/G87Al3jGuV3QcmUpjSHddnLxrsGEOgG5mPF7on5Xg68C/EfSLSVwpH4Okq5eDRkkknbzYr+liJMn72bPnASZzhOtp6V/3Etfa3loRKR89oXULQfJK5oGvUpZpJ5QOHZpv2+B0RQnX079xbxl1qjGuzQdw5ZQfrtMea8BoP0mg2xnpjoxj6IWvjzYq2vdxY29Stf94WIsPKIbgpzcztLjYZMP1YTCl3ByjO391gK/hW8c5wDBsayYaGzRxBO5bm/D6P8KVPxjteudBYE+hqDMlkao0lW9xZCnkpVxrSsdjl6f5AjHycYko8cxY4K5iJhUrLPNJLZBMFMmHlXCPPqGj1m8qMZa+7TDCn07Gg6s9RrWfe+wImyKY9GIp3SPyfDVre3srnjYiJasT1MLvILZP1SAEJKbllgXUR8lGjQygJir5Io01jQGbaFxio+ES5NjIcH392cCZ0K8+f61bIMVmWLu17p+AmaJblqWV1nejoKraWoyyDjZYIw== root@semaphore-target"
